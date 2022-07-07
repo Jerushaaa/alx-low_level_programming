@@ -3,7 +3,7 @@
 
 /**
  * sum_them_all - sums of all it's parameters.
- *@n: number of parameters
+ * @n: number of parameters
  *
  * Return: Sum of all parameters
  */
