@@ -1,51 +1,26 @@
 #!/usr/bin/python3
-"""5-island_perimeter.py"""
+"""
+    Technical interview preparation:
+"""
 
 
-def islandPerimeter(self, grid: List[List[int]]) -> int:
-    v = [[0, 0]]
-    q = [[0, 0]]
-    c = 0
-    return self.bfs(grid, v, q, c)
-
-
-def bfs(self, grid, v, q, c):
-    if q == []:
-        return c
-    i = q[0][0]
-    j = q[0][1]
-    if grid[i][j]:
-        c += 4
-    if i-1 > -1:
-        if [i-1, j] not in v:
-            q.append([i-1, j])
-            v.append([i-1, j])
-        if grid[i-1][j] and grid[i][j]:
-            c -= 1
-    if j-1 > -1:
-        if [i, j-1] not in v:
-            q.append([i, j-1])
-            v.append([i, j-1])
-        if grid[i][j-1] and grid[i][j]:
-            c -= 1
-    try:
-        a = grid[i+1][j]
-        if [i+1, j] not in v:
-            q.append([i+1, j])
-            v.append([i+1, j])
-        if grid[i+1][j] and grid[i][j]:
-            c -= 1
-    except:
-        pass
-    try:
-        a = grid[i][j+1]
-        if [i, j+1] not in v:
-            q.append([i, j+1])
-            v.append([i, j+1])
-        if grid[i][j+1] and grid[i][j]:
-            c -= 1
-    except:
-        pass
-    del q[0]
-
-    return self.bfs(grid, v, q, c)
+def island_perimeter(grid):
+    """
+    returns the perimeter of the island described in grid:
+    grid is a list of list of integers:
+        0 represents a water zone
+        1 represents a land zone
+        One cell is a square with side length 1
+        Grid cells are connected horizontally/vertically (not diagonally).
+        Grid is rectangular, width and height don’t exceed 100
+    """
+    i = 0
+    for x in range(0, len(grid), 1):
+        for j in range(0, len(grid[0]), 1):
+            if grid[x][j] == 1:
+                i = i + 4
+                if j - 1 >= 0 and grid[x][j - 1] == 1:
+                    i -= 2
+                if x - 1 >= 0 and grid[x - 1][j] == 1:
+                    i -= 2
+    return (i)
