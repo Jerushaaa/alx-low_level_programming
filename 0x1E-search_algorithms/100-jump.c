@@ -1,38 +1,36 @@
 #include "search_algos.h"
-
-#define min(a, b) ((a) <= (b) ? (a) : (b))
+#include <math.h>
 
 /**
- * jump_search - search through an array by jumping blocks of size
- * sqrt(size) until element larger than `value` is found. Then,
- * perform linear search on the found block.
- * @array: array to search
- * @size: size of array
+ * jump_search - searches for a value in an sorted array of integers
+ * @array: array of integers, pointer to the first element
+ * @size: the number of elements in the array
  * @value: value to search for
- *
- * Return: index of value, or -1 if absent or array is NULL.
+ * Return: index value found or -1 if not found
  */
 int jump_search(int *array, size_t size, int value)
 {
-	size_t blk_size = (size_t) sqrt(size);
-	size_t i, j;
+	int next = 0;
+	int prev = 0;
+	int jump = 0;
 
-	if (array == NULL || size == 0)
+	if (array == NULL || size <= 0)
 		return (-1);
-	for (i = 0; i < size; i += blk_size)
+
+	jump = sqrt(size);
+
+	for (; array[next] < value && next < (int)size; next = next + jump)
 	{
-		if (array[i] >= value)
-			break;
-		printf("Value checked array[%lu] = [%d]\n", i, array[i]);
+		printf("Value checked array[%i] = [%i]\n", next, array[next]);
+		prev = next;
 	}
-	i -= (i > 0 ? blk_size : 0);
-	printf("Value found between indexes [%lu] and [%lu]\n",
-	       i, i + blk_size);
-	for (j = i; j <= min(size - 1, i + blk_size) && array[j] <= value; j++)
+	printf("Value found between indexes [%i] and [%i]\n", prev, next);
+	while (prev <= next && prev < (int)size)
 	{
-		printf("Value checked array[%lu] = [%d]\n", j, array[j]);
-		if (array[j] == value)
-			return (j);
+		printf("Value checked array[%i] = [%i]\n", prev, array[prev]);
+		if (array[prev] == value)
+			return (prev);
+		prev = prev + 1;
 	}
 	return (-1);
 }
